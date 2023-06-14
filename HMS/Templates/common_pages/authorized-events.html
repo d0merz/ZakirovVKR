@@ -1,0 +1,300 @@
+<div class="container py-5">
+
+    {% comment %} <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="card-title mb-3">Список мероприятий</h2>
+        {% if  role == "manager" or role == "admin"%}
+      <div class="col-sm-12 col-md-12 col-lg-3 mb-4">
+        <a href="{% url 'createEvent' %}" class="btn btn-warning">Добавить мероприятие</a>
+      </div>
+      {% endif %}
+      </div>
+
+      <div class="card-body">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="col mb-4 form-floating">
+              <input type="text" name="type" class="form-control border border-secondary" placeholder="Тип">
+              <label for="type">Тип</label>
+            </div>
+            <div class="col form-floating">
+              <input type="text" name="location" class="form-control border border-secondary" placeholder="Локация">
+              <label for="location">Локация</label>
+            </div>
+            <div class="col mb-4 form-floating">
+              <input type="date" name="fd" value="{{fd}}" class="form-control border border-secondary" placeholder="Начало">
+              <label for="fd">Начало</label>
+            </div>
+            <div class="col mb-4 form-floating">
+              <input type="date" name="ed" value="{{ed}}" class="form-control border border-secondary" placeholder="Конец">
+              <label for="ed">Конец</label>
+            </div>
+            <div class="col">
+              <button type="submit" name="filter" class="btn btn-warning w-15">Отфильтровать</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div> {% endcomment %}
+
+
+    {% comment %} <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="card-title mb-3">Список мероприятий</h2>
+        {% if role == "manager" or role == "admin" %}
+          <div class="col-sm-12 col-md-12 col-lg-3 mb-4">
+            <a href="{% url 'createEvent' %}" class="btn btn-warning">Добавить мероприятие</a>
+          </div>
+        {% endif %}
+      </div>
+    
+      <div class="card-body">
+        <div class="filter-form-wrapper">
+          <form action="" method="POST" class="filter-form">
+            {% csrf_token %}
+            <div class="form-row">
+              <div class="col mb-4 form-floating">
+                <input type="text" name="type" class="form-control border border-secondary" placeholder="Тип">
+                <label for="type">Тип</label>
+              </div>
+              <div class="col form-floating">
+                <input type="text" name="location" class="form-control border border-secondary" placeholder="Локация">
+                <label for="location">Локация</label>
+              </div>
+              <div class="col mb-4 form-floating">
+                <input type="date" name="fd" value="{{fd}}" class="form-control border border-secondary" placeholder="Начало">
+                <label for="fd">Начало</label>
+              </div>
+              <div class="col mb-4 form-floating">
+                <input type="date" name="ed" value="{{ed}}" class="form-control border border-secondary" placeholder="Конец">
+                <label for="ed">Конец</label>
+              </div>
+              <div class="col">
+                <button type="submit" name="filter" class="btn btn-warning w-15">Отфильтровать</button>
+              </div>
+            </div>
+          </form>
+        </div>
+    
+        <button type="button" class="btn btn-primary" id="filter-button">Открыть фильтр</button>
+      </div>
+    </div>
+    
+    <script>
+      const filterFormWrapper = document.querySelector('.filter-form-wrapper');
+      const filterButton = document.querySelector('#filter-button');
+    
+      filterButton.addEventListener('click', () => {
+        filterFormWrapper.classList.toggle('show');
+      });
+    </script>
+    
+    <style>
+      .filter-form-wrapper {
+        display: none;
+      }
+      
+      .filter-form-wrapper.show {
+        display: block;
+      }
+    </style> {% endcomment %}
+
+
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="card-title mb-3">Список мероприятий</h2>
+        {% if role == "manager" or role == "admin" %}
+          <div class="col-sm-12 col-md-12 col-lg-3 mb-4">
+            <a href="{% url 'createEvent' %}" class="btn btn-warning">Добавить мероприятие</a>
+          </div>
+        {% endif %}
+      </div>
+    
+      <div class="card-body">
+        <div class="filter-form-wrapper">
+          <form action="" method="POST" class="filter-form">
+            {% csrf_token %}
+            <div class="form-row">
+              
+              <div class="col mb-4 form-floating">
+                <input type="text" name="type" class="form-control border border-secondary" placeholder="Тип">
+                <label for="type">Тип</label>
+              </div>
+              
+              {% comment %} <div class="col form-floating">
+                <input type="text" name="location" class="form-control border border-secondary" placeholder="Локация">
+                <label for="location">Локация</label>
+              </div> {% endcomment %}
+
+              <div class="col form-floating mb-4">
+                <select class="form-control border border-secondary" name="location" id="id_location" placeholder='Локация'>
+                  <option value="" selected="">---------</option>
+                  <option value="Кинозал">Кинозал</option>
+                  <option value="Театральный зал">Театральный зал</option>
+                  <option value="Конфернцзал">Конфернцзал</option>
+                  <option value="Концертный зал">Концертный зал</option>
+                  <option value="Лаундж-зона">Лаундж-зона</option>
+                </select>
+                <label for="type">Локация</label> 
+              </div>
+              
+              <div class="col mb-4 form-floating">
+                <input type="date" name="fd" value="{{fd}}" class="form-control border border-secondary" placeholder="Начало">
+                <label for="fd">Начало</label>
+              </div>
+              
+              <div class="col mb-4 form-floating">
+                <input type="date" name="ed" value="{{ed}}" class="form-control border border-secondary" placeholder="Конец">
+                <label for="ed">Конец</label>
+              </div>
+              
+              <div class="col">
+                <button type="submit" name="filter" class="btn btn-warning w-15">Отфильтровать</button>
+              </div>
+            
+            </div>
+          </form>
+        </div>
+    
+        <button type="button" class="btn btn-primary mt-3" id="filter-button">Открыть фильтр</button>
+      </div>
+    </div>
+    
+    <script>
+      const filterFormWrapper = document.querySelector('.filter-form-wrapper');
+      const filterButton = document.querySelector('#filter-button');
+
+      const filterIsOpen = localStorage.getItem('filterIsOpen');
+      if (filterIsOpen === 'true') {
+        filterFormWrapper.classList.add('show');
+        filterButton.textContent = 'Закрыть фильтр';
+      }
+    
+      filterButton.addEventListener('click', () => {
+        filterFormWrapper.classList.toggle('show');
+        
+        if (filterFormWrapper.classList.contains('show')) {
+          filterButton.textContent = 'Закрыть фильтр';
+        } else {
+          filterButton.textContent = 'Открыть фильтр';
+        }
+        const filterIsOpen = filterFormWrapper.classList.contains('show');
+        localStorage.setItem('filterIsOpen', filterIsOpen);
+      });
+    </script>
+    
+    <style>
+      .filter-form-wrapper {
+        display: none;
+      }
+      
+      .filter-form-wrapper.show {
+        display: block;
+      }
+    </style> 
+    
+    
+
+  
+    <div class="card mb-4">
+      <div class="card-body">
+        <table class="table table-hover table-striped">
+          <thead class="bg-secondary rounded text-white">
+            <tr>
+              <th class='text-center'>Тип</th>
+              <th class='text-center'>Локация</th>
+              <th class='text-center'>Начало</th>
+              <th class='text-center'>Конец</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+              
+          <tbody>
+            {% for event in events %}
+            <tr>
+              <td class='text-center'>{{ event.eventType }}</td>
+              <td class='text-center'>{{ event.location }}</td>
+              <td class='text-center'>{{ event.startDate }}</td>
+              <td class='text-center'>{{ event.endDate }}</td>
+              <td> <a href="{% url 'event-profile' event.id %}" class="btn btn-sm btn-info px-3">Подробности</a></td>
+              {% if role == "manager" or role == "admin" %}
+                <td> <a href="{% url 'event-edit' event.id %}" class="btn btn-sm btn-primary px-3">Редактировать</a></td>
+                <td> <a href="{% url 'deleteEvent' event.id %}" class="btn btn-sm btn-danger px-3">Удалить</a> </td>
+              {% endif %}
+              {% if role == 'guest' %}
+                <td>
+                  <form action="{% url 'events' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ event.id }}" name="id">
+                    <button type="submit" name="attend" class="btn btn-sm btn-primary px-3">Записаться</button>
+                  </form>
+                </td>
+                <td></td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+            
+        </table>
+          
+      </div>
+    </div>
+
+    {% if role == 'guest' %}
+    <div class="card">
+      
+      <div class="card-header">
+        <h2 class="card-title mb-3">Список моих мероприятий</h2>
+      </div>
+
+      <div class="card-body">
+        <table class="table table-hover table-striped">
+          <thead class="bg-secondary rounded text-white">
+            <tr>
+              <th class='text-center'>Тип</th>
+              <th class='text-center'>Локация</th>
+              <th class='text-center'>Начало</th>
+              <th class='text-center'>Конец</th>
+              <th class='text-center'>Количество участников</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+              
+          <tbody>
+            {% for e in attendedEvents %}
+            <tr>
+              <td class='text-center'>{{ e.event.eventType }}</td>
+              <td class='text-center'>{{ e.event.location }}</td>
+              <td class='text-center'>{{ e.event.startDate }}</td>
+              <td class='text-center'>{{ e.event.endDate }}</td>
+              <td class='text-center'>
+                <form action="" method="POST">
+                {% csrf_token %}
+                  <input type="number" class="form-control w-25 d-inline" min='0' value="{{ e.numberOfDependees }}" name="id-text">
+                  <input type="hidden" value="{{e.id}}" name="id-2">
+                  <button type="submit" name="Save" class="btn btn-sm btn-outline-success px-3 d-inline">Сохранить</button>
+                </form>
+              </td>
+              <td class='text-center'>
+                <form action="" method="POST">
+                {% csrf_token %}
+                  <input type="hidden" value="{{ e.event.id }}" name="id">
+                  <button type="submit" name="remove" class="btn btn-danger px-3">Удалить</button>
+                </form>
+              </td>
+              <td></td>
+            </tr>
+            {% endfor %}
+          </tbody>  
+        </table>
+      </div>
+    
+    </div>
+    {% endif %}
+</div>
+ 

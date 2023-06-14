@@ -1,0 +1,61 @@
+{% load static %}
+
+<div class="container py-5">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title mb-0">Добавить комнату</h2>
+      </div>
+      <div class="card-body">
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row g-3">
+  
+          <div class="col-md-6 form-floating">
+            <input type="number" class="form-control border border-secondary" id="item-type" name="number" placeholder='Номер комнаты'>
+            <label for="number">Номер комнаты</label>
+          </div>
+  
+          <div class="col-md-6 form-floating">
+            <input type="number" class="form-control border border-secondary" id="item-quantity" name="beds" placeholder='Количество кроватей'>
+            <label for="beds" class="form-label">Количество кроватей</label>
+          </div>
+  
+          <div class="col-md-6 form-floating">
+            <input type="number" class="form-control border border-secondary" id="item-quantity" name="price" placeholder='Цена'>
+            <label for="price" class="form-label">Цена</label>
+          </div>
+  
+          <div class="col-md-6 form-floating">
+            <input type="number" min="0" class="form-control border border-secondary" id="item-type" name="capacity" placeholder='Вместительность'>
+            <label for="capacity" class="form-label">Вместительность</label>
+          </div>
+          
+          <div class="col-md-6 form-floating">
+            <input type="file" class="form-control border border-secondary" name="image" placeholder='Фото'>
+            <label for="image" class="form-label">Добавить фото</label>
+          </div>
+
+          <div class="col-md-6 form-floating ">
+            <select class="form-control border border-secondary" name="type" required="" id="id_type">
+              <option value="" selected="">---------</option>
+              <option value="Королевская">Королевская</option>
+              <option value="Люкс">Люкс</option>
+              <option value="Стандарт">Стандарт</option>
+              <option value="Эконом">Эконом</option>
+            </select>
+            <label for="type">Тип комнаты</label> 
+          </div>
+
+          <div class="col-md-6 form-floating mx-auto">
+            <textarea class="form-control border border-secondary" name="description" cols="40" rows="10" required="" id="id_description" placeholder='Описание'></textarea>
+            <label for="id_description">Описание</label>
+          </div> 
+
+          <div class="col-12">
+            <button type="submit" class="btn btn-success">Добавить комнату</button> 
+          </div>
+        </div>
+      </form>
+    </div> 
+  </div>
+</div>

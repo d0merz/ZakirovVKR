@@ -1,0 +1,89 @@
+<div class="container container-profile my-5"> 
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <h2 class="mb-4 text-center">Профиль</h2>
+        <form class='form-profile' action="" method="POST">
+          {% csrf_token %}
+          
+          <div class="form-group">
+            <label for="id_first_name" class='h5'>Имя:</label>
+            {% if employee.user.id != request.user.id %}
+            <p class="form-control-plaintext">{{employee.user.first_name}}</p>
+            {% else %}
+            <input type="text" class="form-control" id="id_first_name" value="{{employee.user.first_name}}" name="first_name" placeholder='Имя'>
+            {% endif %}
+          </div>
+          
+          <div class="form-group">
+            <label for="id_last_name" class='h5'>Фамилия:</label>
+            {% if employee.user.id != request.user.id %}
+            <p class="form-control-plaintext">{{employee.user.last_name}}</p>
+            {% else %}
+            <input type="text" class="form-control" id="id_last_name" value="{{employee.user.last_name}}" name="last_name" placeholder='Фамилия'>
+            
+            {% endif %}
+          </div>
+          
+          <div class="form-group">
+            <label for="id_phone_number" class='h5'>Номер телефона:</label>
+            {% if employee.user.id != request.user.id %}
+            <p class="form-control-plaintext">{{employee.phoneNumber}}</p>
+            {% else %}
+            <input type="text" class="form-control" id="id_phone_number" value="{{employee.phoneNumber}}" name="phoneNumber" placeholder='Номер телефона'>
+            {% endif %}
+          </div>
+          
+          <div class="form-group">
+            <label for="id_phone_number" class='h5'>Почта:</label>
+            {% if employee.user.id != request.user.id %}
+            <p class="form-control-plaintext">{{employee.user.email}}</p>
+            {% else %}
+            <input type="email" class="form-control" id="id_email" value="{{employee.user.email}}" name="email" placeholder='Почта'>
+            {% endif %}
+          </div>
+          
+          <div class="form-group">
+            <label for="id_role" class='h5'>Роль:</label>
+            <p class="form-control-plaintext">{{employee.user.groups.first}}</p>
+          </div>
+          
+          <div class="form-group">
+            <span for="id_salary" class='h5'>Зарплата:</span>
+            <span class="form-control-plaintext">{{employee.salary}}</span>
+          </div>
+          {% if employee.user.id == request.user.id %}
+          <div class='text-center'>
+            <button type="submit" name="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
+          </div>
+          {% endif %}
+        </form>
+      </div>
+      {% if role == 'staff' or request.user != employee.user %}
+      <div class="col-md-6">
+        <h2 class="mb-4 text-center">Список задач</h2>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped text-center">
+            <thead class="bg-secondary text-white">
+              <tr>
+                <th>ID</th>
+                <th>Начало</th>
+                <th>Конец</th>
+                <th>Описание</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for task in tasks %}
+              <tr>
+                <td>{{task.id}}</td>
+                <td>{{task.startTime}}</td>
+                <td>{{task.endTime}}</td>
+                <td>{{task.description}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div> 

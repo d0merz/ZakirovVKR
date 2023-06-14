@@ -1,0 +1,110 @@
+<div class="container container-profile my-5"> 
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <h2 class="mb-4">Комната</h2>
+            
+        <div class="form-group">
+          <label for="id_first_name" class='h5'>Номер комнаты:</label>
+          <p class="font-weight-normal">{{room.number}}</p>
+        </div>
+        
+        <div class="form-group">
+          <label for="id_last_name" class='h5'>Число кроватей:</label>
+          <p class="font-weight-normal">{{room.numberOfBeds}}</p>
+        </div>
+            
+        <div class="form-group">
+          <label for="id_phone_number" class='h5'>Стоимость проживания:</label>
+          <p class="font-weight-normal">{{room.price}}</p>
+        </div>
+            
+        <div class="form-group">
+          <label for="id_email" class='h5'>Тип комнаты:</label>
+          <p class="font-weight-normal">{{ room.roomType }}</p>
+        </div>
+            
+        <div class="form-group">
+          <label for="id_role" class='h5'>Вместительность:</label>
+          <p class="form-control-plaintext">{{room.capacity}}</p>
+        </div>
+
+        {% if room.image %}
+        <div class="form-group">
+          <label for="id_role" class='h5'>Фото:</label>
+          <img class="card-img my-2" src="{{ room.image.url }}">
+        </div>
+        {% endif %}
+
+      </div>
+      
+      <div class="col-md-8">
+        <h2 class="mb-4 text-center">Список броней</h2>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped text-center">
+            <thead class="bg-secondary text-white">
+              <tr>
+                {% if role != 'guest' %}
+                <th>Имя гостя</th>
+                {% endif %}
+                <th>Бронь с</th>
+                <th>По</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for bo in bookings %}
+                <tr>
+                  {% if role != 'guest' %} 
+                  <td>
+                    <a href="{% url 'guest-profile' bo.guest.user.id %}">
+                    {{bo.guest.user.first_name}}
+                    {{bo.guest.user.last_name}}
+                    </a>
+                  </td>
+                  {%endif %}
+                  <td>{{bo.startDate}}</td>
+                  <td>{{bo.endDate}}</td>
+                  <td></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h2 class="mb-4 text-center">Описание</h2>
+      <div class="content">
+        <p class="border rounded p-4">{{room.description}}</p>
+      </div>
+
+      {% if role == "manager" or role == "admin" %}
+      <div class="row">
+        <div class="col-md-6 text-center">
+          <h2 class="my-4">Закрыть комнату</h2>
+          <form action="" method="POST">
+          {% csrf_token %}
+            <input type="date" placeholder="Enter Start Date" name="bsd" required class="form-control w-100 mb-2">
+            <input type="date" placeholder="Enter End Date" name="bed" required class="form-control w-100 mb-2">
+            <button name="lockRoom" type="submit" class="btn btn-info w-60">Закрыть комнату</button>
+            <br>
+          </form>
+        </div>
+
+        {% if room.statusStartDate != None %}
+        <div class="col-md-6 text-center">
+          <h2 class="my-4">Эта комната закрыта:</h2>
+          <h3>
+            С {{room.statusStartDate}} <br> По {{room.statusEndDate}}
+          </h3>
+          <form action="" method="POST">
+          {% csrf_token %}
+          <button name="unlockRoom" type="submit" class="btn btn-info w-60 mt-3">Открыть комнату</button>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    
+      
+    </div>
+</div> 

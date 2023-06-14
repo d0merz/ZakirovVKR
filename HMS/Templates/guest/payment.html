@@ -1,0 +1,74 @@
+{% extends '../index.html' %}
+{% block context %}
+
+{% comment %} <link href="//netdna.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> {% endcomment %}
+<script src="//netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<div class="container container-profile my-5"> 
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <h2 class="text-center">Оплата</h2>
+      <br>
+      <div class='w-50 mx-auto'>
+        <form action="{% url 'verify' %}" method="POST">
+        {% csrf_token %}
+          <div class="form-floating">
+            <input type="number" class="form-control" id="cardNumber" placeholder="НОМЕР КАРТЫ" min="0" max="9999999999999999" required="" autofocus />
+            <label for="cardNumber">НОМЕР КАРТЫ</label>
+          </div>
+
+
+          <div class="row my-3">
+            
+            <div class="col-4">
+              <div class="form-floating">
+                <input type="number" class="form-control" id="expityMonth" min="0" max="12" placeholder="ММ" required="" />
+                <label for="expityMonth">ММ</label>
+              </div>
+            </div>
+            
+            <div class="col-4">
+              <div class="form-floating">
+                <input type="number" class="form-control" id="expityYear" placeholder="ГГ" required="" />
+                <label for="expityYear">ГГ</label>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="form-floating">
+                <input type="password" class="form-control" id="cvCode" placeholder="CVC" required />
+                <label for="cvCode">CVC</label>
+              </div>
+            </div>
+          </div>
+
+          <div class='text-center'>
+            <input type="hidden" value="{{code}}" name="tempCode">
+            <button type="submit" class="btn btn-success btn-lg btn-block">Оплатить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div class="container py-5 d-none">
+  <div class="row justify-content-center">
+    <form action="">
+      <div class="row justify-content-center py-5">
+        <label class="input-group-lg" for="verification">Ведите код, который мы отправили Вам на почту</label>
+      </div>
+      <div class="row justify-content-center py-5">
+        <input class="form-control form-control-lg" type="text" placeholder="Подтверждение" id="verification">
+      </div>
+      <div class="row justify-content-center py-5">
+        <button class="btn btn-lg btn-success py-2">Подтвердить</button>
+      </div>
+    </form>
+  </div>
+</div> 
+
+
+{% endblock %}
+

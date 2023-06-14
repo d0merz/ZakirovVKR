@@ -1,0 +1,54 @@
+<div class="container py-5">
+    <div class="card mb-4">
+      <div class="card-body">
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row mt-3">
+            <div class="col-md-6">
+              
+              <div class="form-floating">
+                <select name="roomType" required="" id="id_roomType" class="form-control custom-select mb-4 border border-secondary">
+                    <option value="Королевская" {% if room.roomType == 'Королевская' %} selected {% endif %}>Королевская</option>
+                    <option value="Люкс" {% if room.roomType == 'Люкс' %} selected {% endif %}>Люкс</option>
+                    <option value="Стандарт" {% if room.roomType == 'Стандарт' %} selected {% endif %}>Стандарт</option>
+                    <option value="Эконом" {% if room.roomType == 'Эконом' %} selected {% endif %}>Эконом</option>
+                </select>
+                <label for="roomType">Тип комнаты:</label>
+              </div>
+              
+              <div class="form-floating mb-4">
+                <input type="number" min="0" class="form-control border border-secondary" value="{{room.numberOfBeds}}" id="id_numberOfBeds" name="numberOfBeds" placeholder='Количество кроватей:'>
+                <label for="numberOfBeds">Количество кроватей:</label>
+              </div>
+
+              <div class="form-floating mb-4">
+                <input type="file" class="form-control border border-secondary" id="id_image" name="image" placeholder='Фото'>
+                <label for="image" class="form-label">Добавить фото</label>
+              </div>
+            
+            </div>
+            
+            <div class="col-md-6">
+              
+              <div class="form-floating">
+                <input type="number" min="1" class="form-control border border-secondary mb-4" value="{{room.capacity}}" id="id_capacity" name="capacity" placeholder='Вместительность:'>
+                <label for="capacity">Вместительность:</label>
+              </div>
+              
+              <div class="form-floating">
+                <input type="number" required='' min="0" step="0.01" class="form-control border border-secondary mb-4" value="{{room.price}}" id="id_price" name="price" placeholder='Цена:'>
+                <label for="price">Цена:</label>
+              </div>
+
+              <div class="form-floating">
+                <textarea class="form-control border border-secondary" id="id_description" name="description" rows="8" required="" placeholder='Описание'>{{ room.description }}</textarea>
+                <label for="id_description">Описание</label>
+              </div>
+             
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success btn-lg px-5 float-right mt-3">Сохранить</button>
+        </form>
+      </div>
+    </div>
+  </div>

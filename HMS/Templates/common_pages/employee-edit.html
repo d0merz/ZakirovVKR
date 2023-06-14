@@ -1,0 +1,43 @@
+<div class="container py-5">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title mb-0">Редактировать информацию о сотруднике</h2>
+      </div>
+      <div class="card-body">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="row g-3">
+  
+          <div class="col-md-6 form-floating">
+            <input type="text" class="form-control" id="id_first_name" value="{{user.first_name}}" name="first_name" placeholder='Имя:'>
+            <label for="first_name">Имя:</label>
+          </div>
+  
+          <div class="col-md-6 form-floating">
+            <input type="text" class="form-control" id="id_last_name" name="last_name" value="{{user.last_name}}" placeholder='Фамилия:'>
+            <label for="last_name" class="form-label">Фамилия:</label>
+          </div>
+  
+          <div class="col-md-6 mb-3 form-floating">
+            <input type="email" class="form-control" id="id_email" value="{{user.email}}" name="email" placeholder='Почта:'>
+            <label for="email" class="form-label">Почта:</label>
+          </div>
+  
+          <div class="col-md-6 form-floating">
+            <input type="text" class="form-control" id="id_phoneNumber" value="{{employee.phoneNumber}}" name="phoneNumber" maxlength="12" placeholder='Номер телефона:'>
+            <label for="phoneNumber" class="form-label">Номер телефона:</label>
+          </div>
+  
+          <div class="col-md-6 form-floating mx-auto">
+            <input type="number" step="any" class="form-control" id="id_salary" value="{{employee.salary}}" name="salary" placeholder='Зарплата:'>
+            <label for="salary">Зарплата:</label>
+          </div>
+  
+            <div class="col-12">
+              <button type="submit" class="btn btn-success">Сохранить</button> 
+            </div>
+          </div>
+        </form>
+      </div> 
+    </div>
+  </div>

@@ -1,0 +1,61 @@
+<div class="container py-5">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title mb-0">Редактировать мероприятие</h2>
+    </div>
+    <div class="card-body">
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div class="row g-3">
+
+        <div class="col-md-6 form-floating">
+          <select class="form-control" name="eventType" required="" id="id_eventType" placeholder='Тип мероприятия'>
+            <option value="Фильм" {% if event.eventType == 'Фильм' %} selected="" {% endif %}>Фильм</option>
+            <option value="Театр" {% if event.eventType == 'Театр' %} selected="" {% endif %}>Театр</option>
+            <option value="Конференция" {% if event.eventType == 'Конференция' %} selected="" {% endif %}>Конференция</option>
+            <option value="Концерт" {% if event.eventType == 'Концерт' %} selected="" {% endif %}>Концерт</option>
+            <option value="Развлечения" {% if event.eventType == 'Развлечения' %} selected="" {% endif %}>Развлечения</option>
+            <option value="Живая музыка" {% if event.eventType == 'Живая музыка' %} selected="" {% endif %}>Живая музыка</option>
+          </select>
+          <label for="exampleFormControlSelect1">Тип мероприятия</label>
+        </div>
+
+        {% comment %} <div class="col-md-6 form-floating">
+          <input type="text" class="form-control mb-4" id="id_location" name="location" value="{{event.location}}" placeholder='Локация'>
+          <label for="id_location" class="form-label">Локация</label>
+        </div> {% endcomment %}
+
+        <div class="col-md-6 form-floating ">
+          <select class="form-control mb-4" name="location" id="id_location" placeholder='Локация'>
+            <option value="Кинозал" {% if event.location == 'Кинозал' %} selected="" {% endif %}>Кинозал</option>
+            <option value="Театральный зал" {% if event.location == 'Театральный зал' %} selected="" {% endif %}>Театральный зал</option>
+            <option value="Конфернцзал" {% if event.location == 'Конфернцзал' %} selected="" {% endif %}>Конфернцзал</option>
+            <option value="Концертный зал" {% if event.location == 'Концертный зал' %} selected="" {% endif %}>Концертный зал</option>
+            <option value="Лаундж-зона" {% if event.location == 'Лаундж-зона' %} selected="" {% endif %}>Лаундж-зона</option>
+          </select>
+          <label for="type">Локация</label> 
+        </div>
+
+        <div class="col-md-6 mb-3 form-floating">
+          <input type="date" class="form-control" id="id_startDate" name="startDate" value="{{ event.startDate|date:'Y-m-d' }}" placeholder='Начало'>
+          <label for="id_startDate" class="form-label">Начало</label>
+        </div>
+
+        <div class="col-md-6 form-floating">
+          <input type="date" class="form-control" id="id_endDate" name="endDate" value="{{ event.endDate|date:'Y-m-d' }}" placeholder='Конец'>
+          <label for="id_endDate" class="form-label">Конец</label>
+        </div>
+
+        <div class="col-md-6 form-floating mx-auto">
+          <textarea class="form-control" id="id_explanation" name="explanation" rows="8" required="" placeholder='Описание'>{{ event.explanation }}</textarea>
+          <label for="id_explanation">Описание</label>
+        </div>
+
+          <div class="col-12">
+            <button type="submit" class="btn btn-success">Сохранить</button> 
+          </div>
+        </div>
+      </form>
+    </div> 
+  </div>
+</div>

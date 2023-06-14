@@ -1,0 +1,31 @@
+{% extends '../index.html' %}
+
+{% block context %}
+{% for message in messages %}
+<div class="alert alert-danger" role="alert">
+  {{message}}
+</div>
+{% endfor %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12 w-50 mx-auto">
+        <form action="" method="POST">
+        {% csrf_token %}
+          <div class="mt-5">
+            <label class="input-group-lg" for="verification">Ведите код, который мы отправили Вам на почту</label>
+          </div>
+          <div class="mt-3">
+            <input class="form-control form-control-lg" type="hidden" placeholder="Подтверждение" id="verification" name="tempCode" value="{{code}}">
+            <input class="form-control form-control-lg" type="text" placeholder="Подтверждение" id="verification" name="realCode">
+          </div>
+          <div class=" text-center mt-5">
+            <button class="btn btn-lg btn-success" name="verify" type="submit">Подтвердить</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

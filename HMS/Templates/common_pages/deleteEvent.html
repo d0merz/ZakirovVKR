@@ -1,0 +1,14 @@
+<div class="row justify-content-center m-5">
+    <div class="card border-danger shadow-lg w-75">
+        <div class="card-body">
+            <p>Вы уверены, что хотите удалить это событие: "{{event}}" ?</p>
+            <form action="{% url 'deleteEvent' event.id %}" method="post">
+                {% csrf_token %}
+                <a class="btn btn-info" href="{% url 'events' %}">Отмена</a>
+
+                <input class="btn btn-danger" type="submit" value="Удалить">
+            </form>
+        </div>
+    </div>
+</div>
+&nbsp

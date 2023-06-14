@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <hr>
+
+  <h3 style='margin-left: 30px;'>Предсказать загруженность отеля</h3>
+  <form id="prediction-form" method="post" style="max-width: 400px; margin: 0 auto; margin-left: 30px;">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="inputDate">Введите дату:</label>
+      <input type="date" id="inputDate" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Предсказать</button>
+    <div id="prediction-result"></div>  <!-- Блок для вывода результата предсказания -->
+  </form>
+
+  <hr>
+  <h3 style='margin-left: 30px;'>Моделирование работы горничных</h3>
+  <form id="maid-simulation-form" method="post" style="max-width: 400px; margin: 0 auto; margin-left: 30px;">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="cleaningTime">Время уборки (в минутах):</label>
+      <input type="number" id="cleaningTime" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="num_rooms">Количество комнат:</label>
+      <input type="number" id="num_rooms" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="num_maids">Количество горничных:</label>
+      <input type="number" id="num_maids" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="arrivalInterval">Интервал прибытия гостей (в минутах):</label>
+      <input type="number" id="arrivalInterval" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Моделировать</button>
+    <div id="maid-simulation-result"></div>  <!-- Блок для вывода результата моделирования -->
+  </form>
+
+  <hr>
+
+  <h3 style='margin-left: 30px;'>Моделирование прибыли</h3>
+  <form id="profit-simulation-form" method="post" style="max-width: 400px; margin: 0 auto; margin-left: 30px;">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="numRooms">Количество комнат:</label>
+      <input type="number" id="numRooms" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="pricePerRoom">Цена за комнату:</label>
+      <input type="number" id="pricePerRoom" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="costPerRoom">Стоимость обслуживания комнаты:</label>
+      <input type="number" id="costPerRoom" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="maidWage">Зарплата горничной:</label>
+      <input type="number" id="maidWage" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="numMaids">Количество горничных:</label>
+      <input type="number" id="numMaids" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="arrival_interval">Интервал прибытия гостей (в минутах):</label>
+      <input type="number" id="arrival_interval" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="stay_duration">Продолжительность пребывания (в минутах):</label>
+      <input type="number" id="stay_duration" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Моделировать</button>
+    <div id="profit-simulation-result"></div>  <!-- Блок для вывода результата моделирования -->
+  </form>
+
+  <img src="{% static "images/winter.jpg" %}" alt="winter">
+  <img src="{% static "images/autumn.jpg" %}" alt="autumn">
+  <img src="{% static "images/summer.jpg" %}" alt="summer">
+  <img src="{% static "images/spring.jpg" %}" alt="spring"> 
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
+  <script>
+  $(document).ready(function() {
+    // Обработчик отправки формы предсказания загруженности отеля
+    $('#prediction-form').submit(function(event) {
+      event.preventDefault();
+      var inputDate = $('#inputDate').val();
+      var csrftoken = $('input[name="csrfmiddlewaretoken"]').val();  // Получение CSRF-токена
+
+      // Выполнение AJAX-запроса для предсказания загруженности отеля
+      $.ajax({
+        url: '/predict',
+        type: 'POST',
+        headers: { 'X-CSRFToken': csrftoken },  // Передача CSRF-токена в заголовки запроса
+        data: {
+          date: inputDate
+        },
+        success: function(response) {
+          // Отображение результата предсказания
+          $('#prediction-result').text('Загруженность отеля: ' + response.prediction + '%');
+        },
+        error: function() {
+          // Обработка ошибки
+          alert('Произошла ошибка при предсказании загруженности отеля.');
+        }
+      });
+    });
+
+    // Обработчик отправки формы моделирования работы горничных
+    $('#maid-simulation-form').submit(function(event) {
+      event.preventDefault();
+      var cleaningTime = $('#cleaningTime').val();
+      var numRooms = $('#num_rooms').val();
+      var numMaids = $('#num_maids').val();
+      var arrivalInterval = $('#arrivalInterval').val();
+      var csrftoken = $('input[name="csrfmiddlewaretoken"]').val();  // Получение CSRF-токена
+
+      // Выполнение AJAX-запроса для моделирования работы горничных
+      $.ajax({
+        url: '/maid_simulation',
+        type: 'POST',
+        headers: { 'X-CSRFToken': csrftoken },  // Передача CSRF-токена в заголовки запроса
+        data: {
+          cleaning_time: cleaningTime,
+          num_rooms: numRooms,
+          num_maids: numMaids,
+          arrival_interval: arrivalInterval
+        },
+        success: function(response) {
+          // Отображение результата моделирования
+          $('#maid-simulation-result').text('Результат моделирования: ' + response.cleaning_schedule);
+        },
+        error: function() {
+          // Обработка ошибки
+          alert('Произошла ошибка при моделировании работы горничных.');
+        }
+      });
+    });
+
+    // Обработчик отправки формы моделирования прибыли
+    $('#profit-simulation-form').submit(function(event) {
+      event.preventDefault();
+      var numRooms = $('#numRooms').val();
+      var pricePerRoom = $('#pricePerRoom').val();
+      var costPerRoom = $('#costPerRoom').val();
+      var maidWage = $('#maidWage').val();
+      var numMaids = $('#numMaids').val();
+      var arrivalInterval = $('#arrival_interval').val();
+      var stayDuration = $('#stay_duration').val();
+      var csrftoken = $('input[name="csrfmiddlewaretoken"]').val();  // Получение CSRF-токена
+
+      // Выполнение AJAX-запроса для моделирования прибыли
+      $.ajax({
+        url: '/profit_simulation',
+        type: 'POST',
+        headers: { 'X-CSRFToken': csrftoken },  // Передача CSRF-токена в заголовки запроса
+        data: {
+          num_rooms: numRooms,
+          price_per_room: pricePerRoom,
+          cost_per_room: costPerRoom,
+          maid_wage: maidWage,
+          num_maids: numMaids,
+          arrival_interval: arrivalInterval,
+          stay_duration: stayDuration
+        },
+        success: function(response) {
+          // Отображение результата моделирования
+          $('#profit-simulation-result').text('Прибыль за месяц составила: ' + response.formatted_profit);
+        },
+        error: function() {
+          // Обработка ошибки
+          alert('Произошла ошибка при моделировании прибыли.');
+        }
+      });
+    });
+  });
+  </script>
+{% endblock %}

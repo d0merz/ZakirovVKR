@@ -1,0 +1,81 @@
+<div class="container container-profile my-5"> 
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <h2 class="mb-4">Вы пытаетесь забронировать этот номер:</h2>
+        <form class='form-profile' action="" method="POST">
+        {% csrf_token %}
+            
+          <div class="form-group">
+            <label class='h5'>Даты:</label>
+            <p class="form-control-plaintext">{{fd}} - {{ld}}</p>
+          </div>
+            
+          <div class="form-group">
+            <label class='h5'>Номер комнаты:</label>
+            <p class="form-control-plaintext">{{ room.number }}</p>
+         </div>
+            
+          <div class="form-group">
+            <label for="id_phone_number" class='h5'>Вместительность:</label>
+            <p class="form-control-plaintext">{{ room.capacity }}</p>
+          </div>
+            
+          <div class="form-group">
+            <label for="id_email" class='h5'>Кол-во кроватей:</label>
+            <p class="form-control-plaintext">{{ room.numberOfBeds }}</p>
+          </div>
+            
+          <div class="form-group">
+            <label for="id_role" class='h5'>Тип комнаты:</label>
+            <p class="form-control-plaintext">{{ room.roomType }}</p>
+          </div>
+
+          <div class="form-group">
+            <label for="id_role" class='h5'>Стоимость брони:</label>
+            <p class="form-control-plaintext">{{ room.price }}</p>
+          </div>
+          <div class="form-group">
+            <label for="id_role" class='h3'>Общая стоимость:</label>
+            <p class="form-control-plaintext">{{total}}</p>
+          </div>
+            
+          {% if guest.user.id == request.user.id %}
+          <button type="submit" name="submit" class="btn btn-primary mt-3">Сохранить</button>
+          {% endif %}
+          
+        </form>
+      </div>
+        
+  
+      <div class="col-md-7">
+        <h2 class="mb-4 text-center">Добавить проживающих</h2>
+        
+        <form action="" method="POST">
+        {% csrf_token %}
+          <div class=row>
+            <input type="hidden" value="{{ room }}" name="roomid">
+            <input type="date" value="{{ fd }}" name="fd" class="d-none">
+            <input type="date" value="{{ ld }}" name="ld" class="d-none">
+            {% if room.capacity > 1 %}
+              <div class="col-8 mx-auto">
+                <input type="text" class="form-control d-inline" name="depName">
+                <button type="submit" name="add" class="form-control btn btn-sm btn-outline-success px-3 d-inline">Добавить</button>
+              </div>
+      
+              <div class="col-12 mt-5">
+                <h4>Список проживающих</h4>
+                <ul id="myList" class="list-group">
+                  {% for n in names %}
+                  <li class="list-group-item">{{n}}<input type="hidden" name="name{{forloop.counter}}" value="{{n}}"></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+            <div class='text-center mt-3'>
+              <button type="submit" class="btn btn-info mt-3 w-50" name="bookGuestButton">Забронировать</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div> 

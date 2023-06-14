@@ -1,0 +1,58 @@
+<div class="container container-profile my-5"> 
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <h2 class="mb-4">Событие</h2>
+          
+      <div class="form-group">
+        <label for="id_first_name" class='h5'>Тип события:</label>
+        <p class="font-weight-normal">{{event.eventType}}</p>
+      </div>
+      
+      <div class="form-group">
+        <label for="id_last_name" class='h5'>Локация:</label>
+        <p class="font-weight-normal">{{event.location}}</p>
+      </div>
+          
+      <div class="form-group">
+        <label for="id_phone_number" class='h5'>Начало:</label>
+        <p class="font-weight-normal">{{event.startDate}}</p>
+      </div>
+          
+      <div class="form-group">
+        <label for="id_email" class='h5'>Конец:</label>
+        <p class="font-weight-normal">{{event.endDate}}</p>
+      </div>
+       
+    </div>
+    <div class="col-md-7">
+      <h2 class="mb-4 text-center">Участники</h2>
+      <div class="table-responsive">
+        <table class="table table-hover table-striped text-center">
+          <thead class="bg-secondary text-white">
+            <tr>
+              <th>Имя</th>
+              <th>Фамилия</th>
+              <th>Количество присутствующих</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for attendee in attendees %}
+            <tr>
+                <td>{{attendee.guest.user.first_name}}</td>
+                <td>{{attendee.guest.user.last_name}}</td>
+                <td>{{attendee.numberOfDependees}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <h2 class="mb-4 text-center">Описание</h2>
+    <div class="content">
+      <p class="border rounded p-4">{{event.explanation}}</p>
+    </div>
+  
+  </div>
+</div> 
+

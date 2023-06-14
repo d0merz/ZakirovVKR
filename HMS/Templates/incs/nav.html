@@ -1,0 +1,115 @@
+<!--Admin Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <button 
+    class="navbar-toggler mx-3" 
+    type="button" 
+    data-toggle="collapse" 
+    data-target="#navbarNavDropdown" 
+    aria-controls="navbarNavDropdown" 
+    aria-expanded="false" 
+    aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav my-1 mx-3">
+            <li class="nav-item">
+                {% if role == 'staff' or role == 'receptionist' or role == 'admin' or role == 'manager' %}
+                <a href="{% url 'employee-profile' user.id %}" class="nav-link">
+                    <h2 class="text-capitalize">
+                        {{ request.user.first_name }} {{ request.user.last_name }}
+                        <small>
+                            - {{ role }}
+                        </small>
+                    </h2>
+                </a>
+                {% endif %}
+                {% if role == 'guest' %}
+                <a href="{% url 'guest-profile' user.id %}" class="nav-link">
+                    <h2 class="text-capitalize">
+                        {{ request.user.first_name }} {{ request.user.last_name }}
+                        <small>
+                            - {{ role }}
+                        </small>
+                    </h2>
+                </a>
+                {% endif %}
+            
+            </li>
+            {% if role != 'staff' %}
+            <li class="nav-item dropdown my-auto">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Опции
+                </a>
+                
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {% if role == 'admin' %}
+
+                        <a class="dropdown-item" href="{% url 'guests'%}">Гости</a>
+                        <a class="dropdown-item" href="{% url 'employees'%}">Сотрудники</a>
+                        <a class="dropdown-item" href="{% url 'events'%}">Мероприятия</a>
+                        <a class="dropdown-item" href="{% url 'bookings' %}">Брони</a>
+                        <a class="dropdown-item" href="{% url 'rooms' %}">Комнаты</a>
+                        {% comment %} <a class="dropdown-item" href="{% url 'refunds' %}">Возвраты</a> {% endcomment %}
+
+                        {% elif role == 'guest' %}
+
+                        <a class="dropdown-item" href="{% url 'rooms' %}">Бронировать комнату</a>
+                        <a class="dropdown-item" href="{% url 'events' %}">Мероприятия</a>
+
+                        {% if request.user.guest.currentRoom != None %}
+                        <a class="dropdown-item" href="{% url 'room-profile' request.user.guest.currentRoom %}">Моя комната</a> 
+                        <a class="dropdown-item" href="{% url 'current-room-services' %}">Обслуживание номера</a>
+                        {% endif %}
+
+
+                        {% elif role == 'manager' %}
+
+                        <a class="dropdown-item" href="{% url 'guests'%}">Гости</a>
+                        <a class="dropdown-item" href="{% url 'employees'%}">Сотрудники</a>
+                        <a class="dropdown-item" href="{% url 'events'%}">Мероприятия</a>
+                        <a class="dropdown-item" href="{% url 'bookings' %}">Брони</a>
+                        <a class="dropdown-item" href="{% url 'rooms' %}">Комнаты</a>
+                        <a class="dropdown-item" href="{% url 'storage' %}">Storage</a>
+                        <a class="dropdown-item" href="{% url 'refunds' %}">Возвраты</a>
+
+
+                        {% elif role == 'receptionist' %}
+
+                        <a class="dropdown-item" href="{% url 'guests'%}">Информация о гостях</a>
+                        <a class="dropdown-item" href="{% url 'rooms'%}">Информация о комнатах</a>
+                        <a class="dropdown-item" href="{% url 'events'%}">Информация о мероприятиях</a>
+                        <a class="dropdown-item" href="{% url 'bookings' %}">Информация о брони</a>
+
+                        {% elif role == 'staff' %}
+
+                        <a class="dropdown-item" href="{% url 'tasks'%}">Мои задачи</a>
+                        {% comment %} <a class="dropdown-item" href="{% url 'storage'%}">Storage</a> {% endcomment %}
+
+                        {% endif %}
+                </div>
+            </li>
+            {% else %}
+            <li class="nav-item my-auto">
+                <a href="{% url 'tasks' %}" class="nav-link">Мои задачи</a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item my-auto">
+                {% if role == 'staff' or role == 'receptionist' or role == 'admin' or role == 'manager' %}
+                <a href="{% url 'employee-profile' user.id %}" class="nav-link">Профиль</a>
+                {% endif %}
+                {% if role == 'guest' %}
+                <a href="{% url 'guest-profile' user.id %}" class="nav-link">Профиль</a>
+                {% endif %} 
+            </li>
+            <li class="nav-item my-auto">
+                <a href="{% url 'logout' %}" class="nav-link">Выйти</a>
+            </li>
+            <li class="nav-item my-auto">
+                {% if role == 'admin' %}
+                <a href="{% url 'statistics' %}" class="nav-link">Анализ статистики</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>
